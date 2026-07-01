@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GDS - Gagneurs D'âmes Service SARL Kinshasa</title>
+<style>
+:root{
+  --bleu:#1e3a8a;
+  --bleu-clair:#3b82f6;
+  --or:#f59e0b;
+  --gris:#f8fafc
+}
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
+body{background:#fff;color:#1e293b;line-height:1.6}
+
+.header{
+  padding:15px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  box-shadow:0 2px 10px rgba(0,0,0,0.1);
+  position:sticky;
+  top:0;
+  background:#fff;
+  z-index:100
+}
+.logo{font-size:20px;font-weight:800;color:var(--bleu)}
+
+.nav{display:flex;gap:20px}
+.nav a{color:var(--bleu);text-decoration:none;font-weight:600;font-size:14px}
+
+.menu-btn{
+  display:none;
+  flex-direction:column;
+  gap:5px;
+  background:none;
+  border:none;
+  cursor:pointer;
+  padding:5px;
+}
+.menu-btn span{
+  width:28px;
+  height:3px;
+  background:var(--bleu);
+  border-radius:2px;
+  transition:0.3s;
+}
+.menu-btn.active span:nth-child(1){
+  transform:rotate(45deg) translate(8px, 8px);
+}
+.menu-btn.active span:nth-child(2){
+  opacity:0;
+}
+.menu-btn.active span:nth-child(3){
+  transform:rotate(-45deg) translate(7px, -7px);
+}
+
+.mobile-menu{
+  display:none;
+  flex-direction:column;
+  gap:15px;
+  background:#fff;
+  position:absolute;
+  top:60px;
+  left:0;
+  width:100%;
+  padding:20px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+.mobile-menu.active{
+  display:flex;
+}
+.mobile-menu a{
+  color:var(--bleu);
+  text-decoration:none;
+  font-weight:600;
+  font-size:16px;
+  padding:10px 0;
+  border-bottom:1px solid #e2e8f0;
+}
+
+.section{padding:60px 20px;max-width:1200px;margin:auto}
+.badge{background:#dbeafe;color:var(--bleu);padding:8px 20px;border-radius:20px;font-weight:600;display:inline-block;margin-bottom:15px;font-size:14px}
+.h1{font-size:36px;color:var(--bleu);font-weight:800;margin:15px 0;line-height:1.2}
+.h2{font-size:28px;color:var(--bleu);font-weight:700;margin:20px 0}
+.h3{font-size:22px;color:var(--bleu);font-weight:700;margin:15px 0}
+
+.btn{background:var(--bleu-clair);color:white;padding:15px 30px;border-radius:30px;text-decoration:none;font-weight:700;display:inline-block;margin:20px 10px 20px 0;border:none;font-size:16px;cursor:pointer}
+.btn-or{background:var(--or)}
+.btn-bleu{background:var(--bleu);color:white;padding:15px 30px;border-radius:10px;border:none;font-weight:700;cursor:pointer}
+
+.card{background:#fff;border-radius:15px;padding:30px;margin:20px 0;box-shadow:0 4px 20px rgba(0,0,0,0.08);border:1px solid #e2e8f0}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+
+.center{text-align:center}
+.footer{background:var(--bleu);color:white;text-align:center;padding:40px 20px;margin-top:50px}
+ul{margin:15px 0 15px 20px;line-height:2.2}
+.divider{height:4px;background:linear-gradient(90deg,var(--bleu),var(--or));margin:60px 0}
+
+.logo-box{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:40px 20px;
+}
+.logo-box img{
+  width:200px;
+  height:auto;
+  border-radius:50%;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:20px;
+  text-align:center;
+}
+.stat-box{
+  background:#fff;
+  padding:25px;
+  border-radius:15px;
+  box-shadow:0 4px 15px rgba(0,0,0,0.08);
+}
+.stat-icon{font-size:32px;margin-bottom:10px}
+.stat-number{font-size:32px;font-weight:800;color:var(--bleu)}
+.stat-label{font-size:14px;color:#64748b}
+
+.price{color:var(--or);font-size:32px;font-weight:800}
+
+.social-icons{
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+.social-btn{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: 8px;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s;
+}
+.whatsapp-btn{
+  background-color: #25D366;
+}
+.whatsapp-btn:hover{
+  background-color: #20ba5a;
+}
+.facebook-btn{
+  background-color: #1877F2;
+}
+.facebook-btn:hover{
+  background-color: #0f66d0;
+}
+
+.contact-info{margin-top:20px;line-height:2}
+
+.fb-page{
+  margin:30px auto;
+  max-width:500px;
+}
+
+/* BOUTON WHATSAPP OFFICIEL ROND */
+.whatsapp-official-round{
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background-color: #25D366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+  z-index: 1000;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.whatsapp-official-round:hover{
+  background-color: #20ba5a;
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(37, 211, 102, 0.5);
+}
+
+/* BADGE ROUGE NOTIF */
+.whatsapp-badge{
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #ff3b30;
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid white;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+ 0% { transform: scale(1); }
+ 50% { transform: scale(1.15); }
+ 100% { transform: scale(1); }
+}
+
+@media(max-width:768px){
+  .grid-2,.grid-3,.stats{grid-template-columns:1fr 1fr}
+  .nav{display:none}
+  .menu-btn{display:flex}
+@media(max-width:480px){
+  .grid-2,.grid-3,.stats{grid-template-columns:1fr}
+  .h1{font-size:28px}
+</style>
+</head>
+<body>
+  
+<div class="header">
+  <div class="logo">GDS SARL</div>
+  
+  <div class="nav">
+    <a href="#identite">Qui sommes-nous</a>
+    <a href="#services">Nos Services</a>
+    <a href="#sites">Sites Web</a>
+    <a href="#contact">Contact</a>
+  </div>
+
+  <button class="menu-btn" id="menuBtn">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#identite">Qui sommes-nous</a>
+    <a href="#services">Nos Services</a>
+    <a href="#sites">Sites Web</a>
+    <a href="#contact">Contact</a>
+  </div>
+</div>
+
+<div class="logo-box">
+    <img src="20260222_192641.png" alt="logo GDS SARL">
+</div>		
+
+<div id="identite" class="section center">
+<div class="badge">GAGNEURS D'ÂMES SERVICE SARL</div>
+<h1 class="h1">Réconcilier les âmes avec Dieu tout en impactant la société</h1>
+<p style="font-size:18px;max-width:700px;margin:20px auto">Valeurs spirituelles + Impact socio-économique = Transformation des vies à Kinshasa</p>
+<a href="#services" class="btn">Découvrir nos services</a>
+<a href="https://wa.me/243836674468" class="btn btn-or" target="_blank">WhatsApp Direct</a>
+</div>
+
+<div class="section">
+<div class="badge">PRÉSENTATION</div>
+<h2 class="h2">Qui est GDS SARL?</h2>
+<div class="card">
+<p><strong>Fondateur :</strong> Matondo Dieuleveut</p>
+<p><strong>Mission :</strong> Réconcilier les âmes avec Dieu tout en apportant une contribution positive à la société à travers une activité organisée, durable et innovante.</p>
+<p style="margin-top:15px"><strong>🎯 Vision :</strong> Être une entreprise de référence qui combine valeurs spirituelles et impact socio-économique, en transformant des vies, des communautés et des générations.</p>
+</div>
+</div>
+
+<div class="section">
+<div class="badge">🌍 NOS OBJECTIFS</div>
+<div class="grid-3">
+<div class="card">
+<h3 class="h3">1. Réussir</h3>
+<p>Devenir indépendant avec une entreprise prospère, stable et durable.</p>
+</div>
+<div class="card">
+<h3 class="h3">2. Impacter</h3>
+<p>Transformer la communauté spirituellement et socialement.</p>
+</div>
+<div class="card">
+<h3 class="h3">3. Servir</h3>
+<p>Répondre aux besoins réels de Kinshasa avec excellence.</p>
+</div>
+</div>
+</div>
+
+<div class="section">
+<div class="badge">✨ POURQUOI ENTREPRENDRE</div>
+<h2 class="h2">Nos raisons d'entreprendre</h2>
+<div class="card">
+<ul>
+<li><strong>Réaliser une vision intérieure</strong> donnée par Dieu</li>
+<li><strong>Créer de la valeur</strong> pour la société kinoise</li>
+<li><strong>Être libre d'agir</strong> sans dépendre d'un patron</li>
+<li><strong>Répondre à un besoin réel :</strong> gagner les âmes, aider, servir et éduquer</li>
+</ul>
+</div>
+</div>
+
+<div class="section">
+<div class="badge">🤝 NOS ENGAGEMENTS</div>
+<h2 class="h2">Obligations du fondateur</h2>
+<div class="card">
+<ol>
+<li><strong>Gérer avec sérieux et responsabilité</strong> - Transparence totale</li>
+<li><strong>Respecter la loi, les partenaires, les clients et l'éthique</strong> chrétienne</li>
+<li><strong>Innover et s'adapter</strong> aux réalités du marché et du terrain</li>
+</ol>
+</div>
+</div>
+
+<div class="section">
+<div class="badge">🚀 AMBITIONS</div>
+<h2 class="h2">Nos ambitions</h2>
+<div class="grid-2">
+<div class="card">
+<h3 class="h3">Rentabilité</h3>
+<p>Atteindre une bonne rentabilité pour soutenir la mission spirituelle.</p>
+</div>
+<div class="card">
+<h3 class="h3">Communauté</h3>
+<p>Fidéliser une clientèle / communauté engagée et touchée par Dieu.</p>
+</div>
+<div class="card">
+<h3 class="h3">Emploi</h3>
+<p>Créer de l'emploi et élargir les services proposés à Kinshasa.</p>
+</div>
+</div>
+</div>
+
+<div class="section">
+<div class="stats">
+<div class="stat-box">
+<div class="stat-icon">✝️</div>
+<div><div class="stat-number">50+</div><div class="stat-label">Âmes touchées</div></div>
+</div>
+<div class="stat-box">
+<div class="stat-icon">⚙️</div>
+<div><div class="stat-number">10+</div><div class="stat-label">Services actifs</div></div>
+</div>
+<div class="stat-box">
+<div class="stat-icon">😊</div>
+<div><div class="stat-number">60+</div><div class="stat-label">Clients satisfaits</div></div>
+</div>
+<div class="stat-box">
+<div class="stat-icon">💻</div>
+<div><div class="stat-number">11</div><div class="stat-label">Développeurs</div></div>
+</div>
+</div>
+</div>
+
+<div class="section" id="services">
+<div class="badge">📦 NOS DOMAINES D'ACTIVITÉ</div>
+<h2 class="h2">Ce que fait GDS SARL</h2>
+<div class="grid-2">
+<div class="card">
+  <h3 class="h3">✝️ Boutique chrétienne</h3>
+  <img src="./bible.jpg" alt="Bible et objets chrétiens" style="width:100%; border-raduis:10px; margin:15px 0;">
+  <p>Livres, t-shirts, objets bibliques</p>
+</div>
+
+<div class="card">
+  <h3 class="h3">🚗 Lavage</h3>
+  <img src="./lavage.jpg" alt="Bible et objets chrétiens" style="width:100%; border-raduis:10px; margin:15px 0;">
+  <p>Véhicule, moto, tapis</p>
+</div>
+
+<div class="card">
+  <h3 class="h3">💻 Bureautique</h3>
+  <img src="./bureautique.jpg" alt="Bible et objets chrétiens" style="width:100%; border-raduis:10px; margin:15px 0;">
+  <p>Saisie, impression, relire, scannage</p>
+</div>
+
+<div class="card">
+  <h3 class="h3">🖨️ Imprimerie</h3>
+  <img src="./imprimerie.jpg" alt="Bible et objets chrétiens" style="width:100%; border-raduis:10px; margin:15px 0;">
+  <p>Affiches, flyers, bâches, cartes</p>
+</div>
+
+<div class="card">
+ <h3 class="h3">⚡ Électricité</h3>
+ <img src="./electricite.jpg" alt="Bible et objets chrétiens" style="width:100%; border-raduis:10px; margin:15px 0;">
+ <p>Installation bâtiments</p>
+</div>
+
+<div class="card">
+ <h3 class="h3">💾 Système d'information</h3>
+ <img src="./systeme.jpg" alt="Bible et objets chrétiens" style="width:100%; border-raduis:10px; margin:15px 0;">
+ <p>Conception logiciels sur mesure</p>
+</div>
+
+<div class="card">
+<h3 class="h3">🎨 Design Graphique</h3>
+<img src="./design.jpg" alt="Bible et objets chrétiens" style="width:100%; border-raduis:10px; margin:15px 0;">
+<p>Logo, carte de visite, affiche</p>
+</div>
+
+<div class="card">
+  <h3 class="h3">👔 Pressing</h3>
+  <img src="./pressing.jpg" alt="Bible et objets chrétiens" style="width:100%; border-raduis:10px; margin:15px 0;">
+ <p>Nettoyage à sec vêtements</p>
+</div>
+</div>
+
+<div class="center" style="margin-top:30px">
+<a href="https://wa.me/243836674468?text=Bonjour,%20je%20veux%20un%20service%20GDS%20SARL" class="btn" target="_blank">Demander un devis</a>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<div id="sites" class="section center">
+<div class="badge">💻 CRÉATION SITE WEB</div>
+<h1 class="h1">Comment GDS SARL crée ton site web pro</h1>
+<p style="font-size:18px;max-width:700px;margin:20px auto">De l'idée à la mise en ligne en 1 mois max.</p>
+</div>
+
+<div class="section">
+<div class="badge">📋 NOTRE PROCESSUS</div>
+<h2 class="h2">Comment on procède étape par étape</h2>
+<div class="grid-3">
+<div class="card"><h3 class="h3">1️⃣ Tu commandes</h3><p>Tu écris sur WhatsApp "SITE + ton activité". On discute 15 min.</p></div>
+<div class="card"><h3 class="h3">2️⃣ Tu paies 50%</h3><p>Acompte 65$ pour site 129$. 100$ pour site 199$. 150$ pour site 299$ On commence direct.</p></div>
+<div class="card"><h3 class="h3">3️⃣ On crée</h3><p>Design + Textes + Photos. Tu valides sur WhatsApp. Modifs illimitées.</p></div>
+<div class="card"><h3 class="h3">4️⃣ On héberge</h3><p>Mise en ligne. Nom de domaine OFFERT. Bouton WhatsApp inclus.</p></div>
+<div class="card"><h3 class="h3">5️⃣ Tu paies 50%</h3><p>Solde à la livraison. On t'envoie tous les accès + formation vidéo.</p></div>
+<div class="card"><h3 class="h3">6️⃣ Support 7j/7</h3><p>Problème ? On répond sur WhatsApp. Modifs mineures gratuites 30 jours.</p></div>
+</div>
+</div>
+
+<div class="section">
+<div class="badge">💰 NOS TARIFS</div>
+<h2 class="h2">Combien ça coûte chez GDS SARL</h2>
+
+<div class="card">
+<h3 style="color:var(--bleu);font-size:26px">🚀 Site Vitrine - 129$ Dans la placé vous donnez 300$</h3>
+<p><strong>Parfait pour :</strong> Église, Ministère, ONG, Coiffeur, Mécanicien</p>
+<ul>
+<li>✅ 1 Page professionnelle moderne</li>
+<li>✅ Bouton WhatsApp direct cliquable</li>
+<li>✅ Hébergement 1 an OFFERT</li>
+<li>✅ Nom de domaine .netlify.app OFFERT</li>
+<li>✅ Livraison 1 mois</li>
+</ul>
+<a href="https://wa.me/243836674468?text=Je%20veux%20le%20Site%2080$" class="btn" target="_blank">Commander 129$</a>
+</div>
+
+<div class="card">
+<h2>💎 Site Complet - <span class="price">199$ dans la placé vous donnez 500$</span></h2>
+<ul>
+<li>✅ 5 Pages : Accueil, Services, À propos, Galerie, Contact</li>
+<li>✅ Formulaire de contact</li>
+<li>✅ Design responsive mobile</li>
+<li>✅ Bouton WhatsApp direct cliquable</li>
+<li>✅ Hébergement 1 an OFFERT</li>
+</ul>
+<a href="https://wa.me/243836674468?text=Je%20veux%20le%20Site%20200$" class="btn" target="_blank">Commander 199$</a>
+</div>
+
+<div class="card">
+<h2>🛒 Boutique WhatsApp - <span class="price">299$ dans la placévous donnez 900$</span></h2>
+<ul>
+<li>✅ Catalogue produits illimité</li>
+<li>✅ Commande directe WhatsApp</li>
+<li>✅ Panier + Total automatique</li>
+<li>✅ Gestion stock simple</li
+</ul>
+<a href="https://wa.me/243836674468?text=Je%20veux%20la%20Boutique%20400$" class="btn" target="_blank">Commander 299$</a>
+</div>
+</div>
+
+<div class="footer" id="contact">
+<h3>Contact</h3>
+<p>Besoin d'aide ? Écrivez-nous dès maintenant.</p>
+
+<div class="social-icons">
+  <a href="https://wa.me/243836674468" target="_blank" class="social-btn whatsapp-btn" aria-label="WhatsApp">
+    <svg viewBox="0 0 32 32" width="22" height="22">
+      <path fill="white" d="M19.11 17.205c-.327-.162-1.937-.956-2.237-1.068-.3-.112-.518-.162-.737.162-.218.324-.845 1.068-1.035 1.287-.191.219-.381.246-.708.082-.327-.162-1.379-.508-2.628-1.621-1.971-1.754-3.301-3.922-3.69-4.583-.39-.661-.042-1.018.293-1.35.3-.3.662-.78.996-1.17.324-.39.433-.663.65-1.106.216-.443.108-.824-.054-1.156-.162-.331-1.468-3.523-2.006-4.499-.512-.914-.1032-1.013-.667-1.025-.538-.011-1.031-.01-1.524-.01-.493 0-1.294.188-1.969.935-.676.748-2.575 2.509-2.575 6.114 0 3.605 2.638 7.092 3.006 7.577.367.485 5.196 7.967 12.597 10.863 1.748.753 3.025 1.202 4.062 1.538 1.705.542 3.26.466 4.491.283 1.373-.204 4.224-1.707 4.825-3.356.602-1.65.602-3.066.421-3.356-.18-.289-.657-.463-1.363-.81z"/>
+    </svg>
+    WhatsApp
+  </a>
+
+  <a href="https://www.facebook.com/Gagneursdameservicesarl" target="_blank" class="social-btn facebook-btn" aria-label="Facebook">
+    <svg viewBox="0 0 32 32" width="22" height="22">
+      <path fill="white" d="M29 0h-26c-1.65 0-3 1.35-3 3v26c0 1.65 1.35 3 3 3h13v-11h-4v-4h4v-3c0-4.418 2.691-6.822 6.625-6.822 1.884 0 3.502.14 3.972.2v4.618h-2.163c-2.145 0-2.562 1.019-2.562 2.513v3.293h5.125l-.67 4h-4.455v11h8.625c1.65 0 3-1.35 3-3v-26c0-1.65-1.35-3-3-3z"/>
+    </svg>
+    Facebook
+  </a>
+</div>
+
+<div class="contact-info">
+<strong>EMAIL</strong><br>
+contact@gdssarl.com<br><br>
+
+<strong>TÉLÉPHONE</strong><br>
++243 836 674 468<br><br>
+
+<strong>DIRECTEUR GENERAL</strong><br>
+Matondo Dieuleveut<br>
+Gagneurs D'âmes Service<br><br>
+
+<strong>ADRESSE</strong><br>
+Kinshasa, RDC<br>
+</div>
+
+<h3 style="margin-top:40px">Suivez-nous sur Facebook</h3>
+<div class="fb-page" 
+     data-href="https://www.facebook.com/Gagneursdameservicesarl"
+     data-tabs="timeline"
+     data-width="500"
+     data-height="400"
+     data-small-header="false"
+     data-adapt-container-width="true"
+     data-hide-cover="false"
+     data-show-facepile="true">
+</div>
+
+<form onsubmit="sendWhatsApp(event)" style="margin-top:30px;max-width:500px;margin:auto">
+<label style="display:block;margin-bottom:10px;color:white">Votre message</label>
+<input type="email" id="email" placeholder="Votre email" required style="width:100%;padding:15px;border-radius:10px;border:none;margin-bottom:15px">
+<textarea id="message" placeholder="Votre message" rows="4" required style="width:100%;padding:15px;border-radius:10px;border:none;margin-bottom:15px"></textarea>
+<button type="submit" class="btn-bleu">Envoyer sur WhatsApp</button>
+</form>
+
+<p style="margin-top:40px;font-size:14px;opacity:0.7">© 2026 GDS SARL- Réconcilier les âmes avec Dieu</p>
+</div>
+
+<!-- BOUTON WHATSAPP OFFICIEL -->
+<a href="https://wa.me/243836674468" 
+   class="whatsapp-official-round" 
+   id="whatsappBtn"
+   target="_blank" 
+   aria-label="Discuter sur WhatsApp">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" width="32" height="32">
+  <span class="whatsapp-badge" id="whatsappBadge">1</span>
+</a>
+
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v18.0"></script>
+
+<script>
+const menuBtn = document.getElementById('menuBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+const whatsappBtn = document.getElementById('whatsappBtn');
+const whatsappBadge = document.getElementById('whatsappBadge');
+
+// Menu mobile
+menuBtn.addEventListener('click', () => {
+  menuBtn.classList.toggle('active');
+  mobileMenu.classList.toggle('active');
+});
+
+document.querySelectorAll('.mobile-menu a').forEach(link => {
+  link.addEventListener('click', () => {
+    menuBtn.classList.remove('active');
+    mobileMenu.classList.remove('active');
+  });
+});
+
+// Formulaire WhatsApp
+function sendWhatsApp(event) {
+  event.preventDefault();
+  const email = document.getElementById('email').value;
+  const message = document.getElementById('message').value;
+  const text = `Bonjour GDS SARL, je suis ${email}. ${message}`;
+  window.open(`https://wa.me/243836674468?text=${encodeURIComponent(text)}`, '_blank');
+}
+
+// Badge + Son après 5s
+const notifSound = new Audio("https://cdn.freesound.org/previews/270/270404_5123851-lq.mp3");
+notifSound.volume = 0.4;
+
+setTimeout(() => {
+  whatsappBadge.style.display = 'flex';
+  notifSound.play().catch(() => {
+    document.addEventListener('click', () => {
+      notifSound.play();
+    }, { once: true });
+  });
+}, 5000);
+
+// Cache le badge au clic
+whatsappBtn.addEventListener('click', () => {
+  whatsappBadge.style.display = 'none';
+});
+</script>
+
+</body>
+</html>
